@@ -25,47 +25,38 @@ import com.yedam.vo.BoardVO;
 public class BoardList extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
-	/**
-	 * Default constructor.
-	 */
 	public BoardList() {
 	}
 
-	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
-	 *      response)
-	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		// 컨텐츠 담고 있는 정보 지정
+		// 컨텐츠 담고 있는 정보 지정.
 		response.setContentType("text/html;charset=utf-8");
 		PrintWriter out = response.getWriter();
 		out.print("<h3>hello</h3>");
 		out.print("<p>나는 한글</p>");
-		
-		// 업무 서비스
+
+		// 업무 서비스.
 		BoardService svc = new BoardServiceImpl();
-		List<BoardVO> list = svc.boardList();
+		List<BoardVO> list = svc.boardList(null);
 
 		out.print("<table border='1'>");
 		out.print("<thead><tr><th>글번호</th><th>제목</th><th>작성자</th></tr></thead>");
 		out.print("<tbody>");
-		for (int i = 0; i < list.size(); i++) {			
+		for (int i = 0; i < list.size(); i++) {
 			out.print("<tr>");
-			out.print("<td align='center'>"+list.get(i).getBoardNo()+"</td>");
-			out.print("<td><a href='../board.serv?bno="+list.get(i).getBoardNo()+"'>"+list.get(i).getTitle()+"</a></td>");
-			out.print("<td>"+list.get(i).getWriter()+"</td>");
+			out.print("<td align='center'>" + list.get(i).getBoardNo() + "</td>");
+			out.print("<td><a href='../board.serv?bno=" //
+					+ list.get(i).getBoardNo() + "'>" //
+					+ list.get(i).getTitle() + "</a></td>");
+			out.print("<td>" + list.get(i).getWriter() + "</td>");
 			out.print("</tr>");
 		}
 		out.print("</tbody></table>");
-		// index 페이지로 이동
+		// index페이지로 이동.
 		out.print("<a href='../html/addForm.html'>등록페이지</a>");
 	}
 
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
-	 *      response)
-	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		doGet(request, response);
