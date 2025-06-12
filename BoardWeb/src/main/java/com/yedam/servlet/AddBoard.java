@@ -1,4 +1,4 @@
-package com.yedam.sevlet;
+package com.yedam.servlet;
 
 import java.io.IOException;
 

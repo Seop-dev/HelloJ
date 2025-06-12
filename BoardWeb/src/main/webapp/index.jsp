@@ -11,25 +11,27 @@
 <title>Insert title here</title>
 </head>
 <body>
+  <jsp:forward page="boardList.do" />
   <%
-  // 주석문...
-  // sample.jsp -> sample_jsp.java -> sample_jsp.class 실행
+  // 주석문..
+  // sample.jsp -> sample_jsp.java -> sample_jsp.class 실행.
   
   String str = "Hello, World";
-  for (int i = 0; i < 10; i++){
+  for (int i = 0; i < 10; i++) {
   %>
-  <h3>여기는 HTML영역입니다</h3>
+  <h3>여기는 HTML영역입니다.</h3>
   <%
-  } // end of for
-  // 여기 자바 영역
+  } // end of for.
+  // 여기 자바 영역.
   BoardService svc = new BoardServiceImpl();
-  List<BoardVO> list = svc.boardList();
+  List<BoardVO> list = svc.boardList(null);
   out.print("<ul>");
-  for(BoardVO board : list){
+  for (BoardVO board : list) {
   %>
   <li><%=board.getBoardNo() %>, <%=board.getTitle() %></li>
   <%
   }
+  out.print("</ul>");
   System.out.println(str);
   %>
 </body>
