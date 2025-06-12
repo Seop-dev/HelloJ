@@ -1,38 +1,44 @@
 package com.yedam.control;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.List;
 
-import javax.servlet.http.*;
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.yedam.common.Control;
-import com.yedam.service.*;
+import com.yedam.service.ReplyService;
+import com.yedam.service.ReplyServiceImpl;
 import com.yedam.vo.ReplyVO;
 
 public class ReplyListControl implements Control {
-    @Override
-    public void exec(HttpServletRequest req, HttpServletResponse resp) throws IOException {
-        int bno = Integer.parseInt(req.getParameter("bno"));
-        ReplyService service = new ReplyServiceImpl();
-        List<ReplyVO> list = service.replyList(bno);
 
-        // JSON 문자열 직접 구성
-        StringBuilder json = new StringBuilder();
-        json.append("[");
-        for (int i = 0; i < list.size(); i++) {
-            ReplyVO vo = list.get(i);
-            json.append("{")
-                .append("\"replyNo\":").append(vo.getBoardNo()).append(",")
-                .append("\"boardNo\":").append(vo.getBoardNo()).append(",")
-                .append("\"reply\":").append("\"").append(vo.getReply().replace("\"", "\\\"")).append("\",")
-                .append("\"replyer\":").append("\"").append(vo.getReplyer().replace("\"", "\\\"")).append("\",")
-                .append("\"replyDate\":").append("\"").append(vo.getReplyDate()).append("\"")
-                .append("}");
-            if (i < list.size() - 1) json.append(",");
-        }
-        json.append("]");
+	@Override
+	public void exec(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		// ReplyList.do => json문자열 반환
+		// 자바객체 -> json문자열로 변환(Gson)
+		resp.setContentType("text/json;charset=utf-8");
+		
+		String bno = req.getParameter("bno");
+		
+		ReplyVO reply = new ReplyVO();
+		reply.setBoardNo(221);
+		reply.setReply("댓글내용");
+		reply.setReplyer("user01");
+		
+		ReplyService svc = new ReplyServiceImpl();
+		List<ReplyVO> list = svc.replyList(221);
+		
+		Gson gson = new GsonBuilder().setPrettyPrinting().create();
+		String json = gson.toJson(list);
+		System.out.println(json);
+		
+		PrintWriter out = resp.getWriter();
+		out.print(json);
+	}
 
-        resp.setContentType("application/json;charset=utf-8");
-        resp.getWriter().print(json.toString());
-    }
 }

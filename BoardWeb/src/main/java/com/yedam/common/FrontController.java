@@ -53,10 +53,12 @@ public class FrontController extends HttpServlet {
 		map.put("/memberList.do", new MemberListControl());
 		// 상품관련
 		map.put("/allProduct.do", new AllControl());
-		// Reply 관련 매핑
+		
+		// 댓글관련 json파일
 		map.put("/replyList.do", new ReplyListControl());
 		map.put("/addReply.do", new AddReplyControl());
 		map.put("/removeReply.do", new RemoveReplyControl());
+		map.put("/getReply.do", new GetReplyControl());
 	}
 
 	@Override

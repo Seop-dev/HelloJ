@@ -12,6 +12,7 @@ public class AppTest {
 		
 		// 단건조회
 		
+		
 		// 입력
 		ReplyVO rep = new ReplyVO();
 		rep.setBoardNo(221);

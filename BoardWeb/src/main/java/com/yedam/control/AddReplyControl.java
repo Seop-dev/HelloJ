@@ -13,19 +13,25 @@ import com.yedam.vo.ReplyVO;
 public class AddReplyControl implements Control {
     @Override
     public void exec(HttpServletRequest req, HttpServletResponse resp) throws IOException {
-        int bno = Integer.parseInt(req.getParameter("bno"));
-        String reply = req.getParameter("reply");
-        String replyer = req.getParameter("replyer");
-
-        ReplyVO vo = new ReplyVO();
-        vo.setBoardNo(bno);
-        vo.setReply(reply);
-        vo.setReplyer(replyer);
-
-        ReplyService service = new ReplyServiceImpl();
-        boolean result = service.addReply(vo);
-
-        resp.setContentType("text/json;charset=utf-8");
-        resp.getWriter().print("{\"retCode\":\"" + (result ? "OK" : "NG") + "\"}");
+        // 댓글등록. 원본글번호, 댓글작성자, 댓글
+    	resp.setContentType("text/json;charset=utf-8");
+    	String bno = req.getParameter("bno"); //원본글번호
+    	String reply = req.getParameter("reply"); //댓글내용
+    	String replyer = req.getParameter("replyer"); //작성자
+    	
+    	ReplyVO rvo = new ReplyVO();
+    	rvo.setBoardNo(Integer.parseInt(bno));
+    	rvo.setReply(reply);
+    	rvo.setReplyer(replyer);
+    	// DB 입력처리
+    	ReplyService svc = new ReplyServiceImpl();
+    	if(svc.addReply(rvo)){
+    		//{"retCode": "Success"}
+    		resp.getWriter().print("{\"retCode\": \"Success\"}");
+    	}else {
+    		//{"retCode": "Fail"}
+    		resp.getWriter().print("{\"retCode\": \"Fail\"}");
+    	}
+    	
     }
 }

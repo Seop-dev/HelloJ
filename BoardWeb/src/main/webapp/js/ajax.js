@@ -23,11 +23,31 @@ setTimeout(function(){
 // 객체 XMLHttpRequest
 console.log("start");
 let xhtp = new XMLHttpRequest();
-xhtp.open('get', 'boardList.do'); // 페이지 요청
+xhtp.open('get', 'replyList.do?bno=221'); // 페이지 요청
 xhtp.send(); // 페이지 요청
-xhtp.onload = function(){
+xhtp.onload = function() {
 	console.log(xhtp.responseText);
-	document.querySelector('#show').innerHTML = xhtp.responseText;
+	let data = JSON.parse(xhtp.responseText);
+	data.forEach(function(item) {
+		console.log(item);
+		let tr = document.createElement('tr'); // <tr></tr>
+		// 글번호, 내용, 작성자
+		for(let prop of ['replyNo', 'reply', 'replyer']){
+		let td = document.createElement('td'); // <td></td>
+		td.innerHTML = item[prop]; // item['replyNo']
+		tr.appendChild(td); // <tr><td>3</td></tr>
+		}
+		// button 생성
+		let td = document.createElement('td');
+		let btn = document.createElement('button');
+		btn.innerHTML = '삭제';
+		btn.className = 'btn btn-danger';
+		td.appendChild(btn);
+		tr.appendChild(td);
+		
+		document.querySelector('tbody').appendChild(tr);
+	});
+	//document.querySelector('#show').innerHTML = xhtp.responseText;
 }
 
 function memberList() {

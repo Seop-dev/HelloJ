@@ -3,8 +3,11 @@
 <h3>product/product/List.jsp</h3>
 
 <div id="show">
-  <ul>
-    <li>1, Evenhard, 2000</li>
-  </ul>
+  <table class="table">
+    <tr>
+      <th>글번호</th><th>댓글내용</th><th>작성자</th><th>삭제</th>
+    </tr>
+
+  </table>
 </div>
 <script src="js/ajax.js"></script>
