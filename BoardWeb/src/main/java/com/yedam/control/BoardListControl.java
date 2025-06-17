@@ -2,6 +2,7 @@ package com.yedam.control;
 
 import java.io.IOException;
 import java.net.URLDecoder;
+import java.net.URLEncoder;
 import java.util.List;
 
 import javax.servlet.ServletException;
@@ -45,14 +46,14 @@ public class BoardListControl implements Control {
 		req.setAttribute("blist", list); // 요청정보에 값을 담아서 전달.
 		req.setAttribute("pageInfo", paging);
 		req.setAttribute("search", search);
-		// 요청재지정(페이지이동)
+		// 요청재지정(페이지이동) admin/board/
 		HttpSession session = req.getSession();
 		String auth = (String) session.getAttribute("auth");
-		if(auth != null && auth.equals("User")/*일반사용자*/) {
-			req.getRequestDispatcher("user/boardList.tiles").forward(req, resp);			
-		}else if(auth != null && auth.equals("Admin")/*관리자*/) {
-			req.getRequestDispatcher("admin/board/boardList.tiles").forward(req, resp);			
-		}else {
+		if (auth != null && auth.equals("User")/* 일반사용자 */) {
+			req.getRequestDispatcher("user/boardList.tiles").forward(req, resp);
+		} else if (auth != null && auth.equals("Admin")/* 관리자 */) {
+			req.getRequestDispatcher("admin/board/boardList.tiles").forward(req, resp);
+		} else {
 			req.getRequestDispatcher("user/boardList.tiles").forward(req, resp);
 		}
 	}

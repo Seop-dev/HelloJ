@@ -19,26 +19,23 @@ public class ReplyListControl implements Control {
 
 	@Override
 	public void exec(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		// ReplyList.do => json문자열 반환
+		// ReplyList.do => json문자열 반환.
 		// 자바객체 -> json문자열로 변환(Gson)
 		resp.setContentType("text/json;charset=utf-8");
-		
+
 		String bno = req.getParameter("bno");
-		
-		ReplyVO reply = new ReplyVO();
-		reply.setBoardNo(221);
-		reply.setReply("댓글내용");
-		reply.setReplyer("user01");
-		
+		String page = req.getParameter("page");
+
 		ReplyService svc = new ReplyServiceImpl();
-		List<ReplyVO> list = svc.replyList(221);
-		
+		List<ReplyVO> list = svc.replyList(Integer.parseInt(bno), Integer.parseInt(page));
+
 		Gson gson = new GsonBuilder().setPrettyPrinting().create();
 		String json = gson.toJson(list);
 		System.out.println(json);
-		
+
 		PrintWriter out = resp.getWriter();
 		out.print(json);
+
 	}
 
 }

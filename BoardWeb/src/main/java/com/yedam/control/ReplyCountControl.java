@@ -7,21 +7,21 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.yedam.common.Control;
-import com.yedam.service.BoardService;
-import com.yedam.service.BoardServiceImpl;
+import com.yedam.service.ReplyService;
+import com.yedam.service.ReplyServiceImpl;
 
-public class RemoveBoardControl implements Control {
+public class ReplyCountControl implements Control {
 
 	@Override
 	public void exec(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		// TODO Auto-generated method stub
+		// 글번호의 댓글건수 반환.
 		String bno = req.getParameter("bno");
-		// 글상세조회.
-		BoardService svc = new BoardServiceImpl();
-		svc.removeBoard(Integer.parseInt(bno));
 
-		// 요청재지정(페이지이동)
-		resp.sendRedirect("boardList.do");
+		ReplyService svc = new ReplyServiceImpl(); // totalCount
+		int totalCnt = svc.totalCount(Integer.parseInt(bno));
+		// {"totalCnt": 27}
+		resp.getWriter().print("{\"totalCnt\": " + totalCnt + "}");
+
 	}
 
 }

@@ -15,6 +15,8 @@ import com.yedam.control.AddReplyControl;
 import com.yedam.control.AllControl;
 import com.yedam.control.BoardControl;
 import com.yedam.control.BoardListControl;
+import com.yedam.control.ChartControl;
+import com.yedam.control.GetReplyControl;
 import com.yedam.control.LoginControl;
 import com.yedam.control.LoginFormControl;
 import com.yedam.control.LogoutControl;
@@ -22,7 +24,10 @@ import com.yedam.control.MemberListControl;
 import com.yedam.control.ModifyBoardControl;
 import com.yedam.control.RemoveBoardControl;
 import com.yedam.control.RemoveReplyControl;
+import com.yedam.control.ReplyCountControl;
+import com.yedam.control.ReplyInfoControl;
 import com.yedam.control.ReplyListControl;
+
 
 /*
  * M-V-Control역할.
@@ -44,6 +49,7 @@ public class FrontController extends HttpServlet {
 		map.put("/addBoard.do", new AddBoardControl());
 		map.put("/modifyBoard.do", new ModifyBoardControl()); // 수정화면
 		map.put("/removeBoard.do", new RemoveBoardControl()); // 삭제화면
+		map.put("/chart.do", new ChartControl());
 
 		// member관련.
 		map.put("/loginForm.do", new LoginFormControl()); // 화면.
@@ -51,14 +57,17 @@ public class FrontController extends HttpServlet {
 		map.put("/logout.do", new LogoutControl());
 		// 회원목록.
 		map.put("/memberList.do", new MemberListControl());
-		// 상품관련
+		// 상품관련.
 		map.put("/allProduct.do", new AllControl());
-		
-		// 댓글관련 json파일
-		map.put("/replyList.do", new ReplyListControl());
-		map.put("/addReply.do", new AddReplyControl());
-		map.put("/removeReply.do", new RemoveReplyControl());
-		map.put("/getReply.do", new GetReplyControl());
+
+		// 댓글관련. json파일.
+		map.put("/replyList.do", new ReplyListControl()); // 댓글목록.
+		map.put("/addReply.do", new AddReplyControl()); // 댓글등록.
+		map.put("/removeReply.do", new RemoveReplyControl()); // 댓글삭제.
+		map.put("/getReply.do", new GetReplyControl()); // 단건조회.
+		map.put("/replyCount.do", new ReplyCountControl()); // 댓글건수.
+		map.put("/replyInfo.do", new ReplyInfoControl());
+
 	}
 
 	@Override
