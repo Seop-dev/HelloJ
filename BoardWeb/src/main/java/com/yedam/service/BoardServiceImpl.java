@@ -9,7 +9,6 @@ import com.yedam.common.DataSource;
 import com.yedam.common.SearchDTO;
 import com.yedam.mapper.BoardMapper;
 import com.yedam.vo.BoardVO;
-import com.yedam.vo.EventVO;
 
 public class BoardServiceImpl implements BoardService {
 	SqlSession sqlSession = DataSource.getInstance().openSession();
@@ -17,7 +16,8 @@ public class BoardServiceImpl implements BoardService {
 
 	@Override
 	public List<BoardVO> boardList(SearchDTO search) {
-		return mapper.selectListWithPaging(search);
+//		return mapper.selectListWithPaging(search);
+		return mapper.selectList();
 	}
 
 	@Override
@@ -64,24 +64,34 @@ public class BoardServiceImpl implements BoardService {
 	public int getTotalCount(SearchDTO search) {
 		return mapper.selectCount(search);
 	}
-	
+
 	@Override
-    public List<Map<String, Object>> chartCount() {
-        return mapper.selectUserByCount();
-    }
-	
-	  @Override
-	    public List<EventVO> eventList() {
-	        return mapper.selectEvent();
-	    }
+	public List<Map<String, Object>> chartCount() {
+		return mapper.selectUserByCount();
+	}
 
-	    @Override
-	    public boolean addEvent(EventVO vo) {
-	        return mapper.insertEvent(vo) == 1;
-	    }
+	@Override
+	public List<Map<String, String>> eventList() {
+		return mapper.selectEvent();
+	}
 
-	    @Override
-	    public boolean removeEvent(Long eventId) {
-	        return mapper.deleteEvent(eventId) == 1;
-	    }
+	@Override
+	public boolean addEvent(Map<String, String> map) {
+		int r = mapper.insertEvent(map);
+		if (r == 1) {
+			sqlSession.commit();
+			return true;
+		}
+		return false;
+	}
+
+	@Override
+	public boolean removeEvent(Map<String, String> map) {
+		int r = mapper.deleteEvent(map);
+		if (r == 1) {
+			sqlSession.commit();
+			return true;
+		}
+		return false;
+	}
 }

@@ -11,11 +11,16 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.yedam.control.AddBoardControl;
+import com.yedam.control.AddEventControl;
 import com.yedam.control.AddReplyControl;
 import com.yedam.control.AllControl;
 import com.yedam.control.BoardControl;
 import com.yedam.control.BoardListControl;
+import com.yedam.control.CenterControl;
 import com.yedam.control.ChartControl;
+import com.yedam.control.ChartPageControl;
+import com.yedam.control.CheckControl;
+import com.yedam.control.EventListControl;
 import com.yedam.control.GetReplyControl;
 import com.yedam.control.LoginControl;
 import com.yedam.control.LoginFormControl;
@@ -27,7 +32,8 @@ import com.yedam.control.RemoveReplyControl;
 import com.yedam.control.ReplyCountControl;
 import com.yedam.control.ReplyInfoControl;
 import com.yedam.control.ReplyListControl;
-
+import com.yedam.control.SignUpControl;
+import com.yedam.control.RemoveEventControl;
 
 /*
  * M-V-Control역할.
@@ -50,11 +56,19 @@ public class FrontController extends HttpServlet {
 		map.put("/modifyBoard.do", new ModifyBoardControl()); // 수정화면
 		map.put("/removeBoard.do", new RemoveBoardControl()); // 삭제화면
 		map.put("/chart.do", new ChartControl());
+		map.put("/chartpage.do", new ChartPageControl());
+		// fullcalendar.
+		map.put("/eventList.do", new EventListControl());
+		map.put("/addEvent.do", new AddEventControl());
+		map.put("/removeEvent.do", new RemoveEventControl());
+		map.put("/centerList.do", new CenterControl());
 
 		// member관련.
 		map.put("/loginForm.do", new LoginFormControl()); // 화면.
 		map.put("/login.do", new LoginControl()); // id,pw 로그인처리.
 		map.put("/logout.do", new LogoutControl());
+		map.put("/signup.do", new SignUpControl());
+		map.put("/checkId.do", new CheckControl());
 		// 회원목록.
 		map.put("/memberList.do", new MemberListControl());
 		// 상품관련.
